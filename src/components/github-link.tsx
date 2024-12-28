@@ -1,6 +1,6 @@
 import { ExternalLinkButton } from "@/components/external-link"
 
-const GITHUB_REPO_URL = "https://github.com/cmayoracurzio/durandal"
+const GITHUB_REPO_URL = "https://github.com/cmayoracurzio/virtualized-select"
 
 export function GitHubLinkButton() {
   return (
