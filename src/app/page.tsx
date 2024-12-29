@@ -1,6 +1,14 @@
 "use client"
 
-import { ReactNode, useCallback, useMemo, useState } from "react"
+import {
+  ChangeEvent,
+  KeyboardEvent,
+  memo,
+  ReactNode,
+  useCallback,
+  useMemo,
+  useState,
+} from "react"
 import { faker } from "@faker-js/faker"
 
 import { useDebounce } from "@/hooks/use-debounce"
@@ -339,81 +347,90 @@ type DemoFieldProps = BaseDemoFieldProps & {
   children: ReactNode
 }
 
-function DemoField({ label, description, required, children }: DemoFieldProps) {
-  return (
-    <div className="flex items-center justify-between gap-6 rounded-md border p-3 shadow-sm">
-      <div className="flex-1 space-y-0.5">
-        <p className="text-sm font-medium">
-          {label}
-          {required && (
-            <>
-              {" "}
-              <span className="text-red-500">*</span>
-              <span className="sr-only">Required</span>
-            </>
-          )}
-        </p>
-        <p className="text-sm text-muted-foreground">{description}</p>
+const DemoField = memo(
+  ({ label, description, required, children }: DemoFieldProps) => {
+    return (
+      <div className="flex items-center justify-between gap-6 rounded-md border p-3 shadow-sm">
+        <div className="flex-1 space-y-0.5">
+          <p className="text-sm font-medium">
+            {label}
+            {required && (
+              <>
+                {" "}
+                <span className="text-red-500">*</span>
+                <span className="sr-only">Required</span>
+              </>
+            )}
+          </p>
+          <p className="text-sm text-muted-foreground">{description}</p>
+        </div>
+        <div className="flex w-1/3 flex-col place-items-end justify-center gap-2">
+          {children}
+        </div>
       </div>
-      <div className="flex w-1/3 flex-col place-items-end justify-center gap-2">
-        {children}
-      </div>
-    </div>
-  )
-}
+    )
+  }
+)
+DemoField.displayName = "DemoField"
 
 type InputFieldProps = BaseDemoFieldProps & {
   value: string | undefined
   onChange: (value: string | undefined) => void
 }
 
-function InputField({ value, onChange, ...demoFieldProps }: InputFieldProps) {
-  const handleChange = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      onChange(event.target.value)
-    },
-    [onChange]
-  )
+const InputField = memo(
+  ({ value, onChange, ...demoFieldProps }: InputFieldProps) => {
+    const handleChange = useCallback(
+      (event: ChangeEvent<HTMLInputElement>) => {
+        onChange(event.target.value)
+      },
+      [onChange]
+    )
 
-  const handleKeyDown = useCallback(
-    (event: React.KeyboardEvent<HTMLInputElement>) => {
-      if (event.key === "Backspace" && (value === "" || value === undefined)) {
-        event.preventDefault()
-        onChange(undefined)
-      }
-    },
-    [onChange, value]
-  )
+    const handleKeyDown = useCallback(
+      (event: KeyboardEvent<HTMLInputElement>) => {
+        if (
+          event.key === "Backspace" &&
+          (value === "" || value === undefined)
+        ) {
+          event.preventDefault()
+          onChange(undefined)
+        }
+      },
+      [onChange, value]
+    )
 
-  return (
-    <DemoField {...demoFieldProps}>
-      <Input
-        placeholder={value === undefined ? "undefined" : undefined}
-        onChange={handleChange}
-        onKeyDown={handleKeyDown}
-      />
-    </DemoField>
-  )
-}
+    return (
+      <DemoField {...demoFieldProps}>
+        <Input
+          placeholder={value === undefined ? "undefined" : undefined}
+          value={value ?? ""}
+          onChange={handleChange}
+          onKeyDown={handleKeyDown}
+        />
+      </DemoField>
+    )
+  }
+)
+InputField.displayName = "InputField"
 
 type ButtonFieldProps = BaseDemoFieldProps & {
   buttonChildren: ReactNode
   onClick: () => void
 }
 
-function ButtonField({
-  buttonChildren,
-  onClick,
-  ...demoFieldProps
-}: ButtonFieldProps) {
-  return (
-    <DemoField {...demoFieldProps}>
-      <Button variant="outline" onClick={onClick}>
-        {buttonChildren}
-      </Button>
-    </DemoField>
-  )
-}
+const ButtonField = memo(
+  ({ buttonChildren, onClick, ...demoFieldProps }: ButtonFieldProps) => {
+    return (
+      <DemoField {...demoFieldProps}>
+        <Button variant="outline" onClick={onClick}>
+          {buttonChildren}
+        </Button>
+      </DemoField>
+    )
+  }
+)
+ButtonField.displayName = "ButtonField"
 
 type SwitchFieldProps = BaseDemoFieldProps & {
   value?: boolean
@@ -421,18 +438,20 @@ type SwitchFieldProps = BaseDemoFieldProps & {
   disabled?: boolean
 }
 
-function SwitchField({
-  value,
-  onChange,
-  disabled,
-  ...demoFieldProps
-}: SwitchFieldProps) {
-  return (
-    <DemoField {...demoFieldProps}>
-      <Switch checked={value} onCheckedChange={onChange} disabled={disabled} />
-    </DemoField>
-  )
-}
+const SwitchField = memo(
+  ({ value, onChange, disabled, ...demoFieldProps }: SwitchFieldProps) => {
+    return (
+      <DemoField {...demoFieldProps}>
+        <Switch
+          checked={value}
+          onCheckedChange={onChange}
+          disabled={disabled}
+        />
+      </DemoField>
+    )
+  }
+)
+SwitchField.displayName = "SwitchField"
 
 type SliderFieldProps = BaseDemoFieldProps & {
   value: number
@@ -441,23 +460,26 @@ type SliderFieldProps = BaseDemoFieldProps & {
   onChange: (value: number) => void
 }
 
-function SliderField({
-  value,
-  minValue,
-  maxValue,
-  onChange,
-  ...demoFieldProps
-}: SliderFieldProps) {
-  return (
-    <DemoField {...demoFieldProps}>
-      <p className="text-right text-sm">{value}</p>
-      <Slider
-        min={minValue}
-        max={maxValue}
-        value={[value]}
-        step={1}
-        onValueChange={(values) => onChange(values[0])}
-      />
-    </DemoField>
-  )
-}
+const SliderField = memo(
+  ({
+    value,
+    minValue,
+    maxValue,
+    onChange,
+    ...demoFieldProps
+  }: SliderFieldProps) => {
+    return (
+      <DemoField {...demoFieldProps}>
+        <p className="text-right text-sm">{value}</p>
+        <Slider
+          min={minValue}
+          max={maxValue}
+          value={[value]}
+          step={1}
+          onValueChange={(values) => onChange(values[0])}
+        />
+      </DemoField>
+    )
+  }
+)
+SliderField.displayName = "SliderField"
