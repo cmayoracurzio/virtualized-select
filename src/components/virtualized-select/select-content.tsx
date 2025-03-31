@@ -369,7 +369,6 @@ export const SelectContent = <Option,>({
           disabled={options.length === 0}
         />
       )}
-
       <div
         ref={scrollElementRef}
         tabIndex={-1}
