@@ -5,7 +5,6 @@ import {
   type Range,
 } from "@tanstack/react-virtual"
 
-import { SelectEmpty } from "./select-empty"
 import { SelectOptionGroup } from "./select-group"
 import { SelectOption } from "./select-option"
 import { SelectSearch } from "./select-search"
@@ -370,14 +369,17 @@ export const SelectContent = <Option,>({
           disabled={options.length === 0}
         />
       )}
-      {effectiveOptions.length === 0 ? (
-        <SelectEmpty message={noOptionsMessage} />
-      ) : (
-        <div
-          ref={scrollElementRef}
-          tabIndex={-1}
-          className="max-h-[12.5rem] overflow-y-auto overflow-x-hidden outline-none"
-        >
+
+      <div
+        ref={scrollElementRef}
+        tabIndex={-1}
+        className="max-h-[12.5rem] overflow-y-auto overflow-x-hidden outline-none"
+      >
+        {effectiveOptions.length === 0 ? (
+          <div className="truncate px-2 py-6 text-center text-sm">
+            {noOptionsMessage}
+          </div>
+        ) : (
           <div
             style={{
               height: `${virtualizer.getTotalSize()}px`,
@@ -428,8 +430,8 @@ export const SelectContent = <Option,>({
               )
             })}
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </>
   )
 }
