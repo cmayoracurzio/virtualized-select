@@ -10,7 +10,7 @@ import { SelectOption } from "./select-option"
 import { SelectSearch } from "./select-search"
 import { type SelectProps } from "./types"
 
-// TODO: Add commentary about why select-content is temporarily a separate component from select
+// TODO: Add commentary about why select-content is a separate component from select
 
 type SelectContentProps<Option> = Pick<
   SelectProps<Option>,
