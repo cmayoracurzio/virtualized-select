@@ -4,7 +4,6 @@ import { ThemeProvider } from "next-themes"
 
 import { GitHubLinkButton } from "@/components/github-link"
 import { ToggleThemeButton } from "@/components/toggle-theme"
-import { XLinkButton } from "@/components/x-link"
 
 import "@/styles/globals.css"
 
@@ -38,7 +37,6 @@ export default function RootLayout({
             <div className="flex justify-end">
               <ToggleThemeButton />
               <GitHubLinkButton />
-              <XLinkButton />
             </div>
 
             <div className="space-y-2">
