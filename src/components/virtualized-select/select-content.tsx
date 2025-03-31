@@ -12,32 +12,37 @@ import { type SelectProps } from "./types"
 
 // TODO: Add commentary about why select-content is a separate component from select
 
-type SelectContentProps<Option> = Pick<
-  SelectProps<Option>,
-  | "options"
-  | "getOptionValue"
-  | "noOptionsMessage"
-  | "enableSearch"
-  | "searchPlaceholder"
-  | "searchDebounceMilliseconds"
-  | "initialFocusOnFirstOption"
-  | "stickyGroups"
-  | "getOptionGroup"
-  | "getOptionSize"
-  | "defaultOptionSize"
-  | "getOptionGroupSize"
-  | "defaultOptionGroupSize"
-  | "gap"
-  | "overscan"
-  | "loop"
-> & {
-  getOptionLabel: (option: Option) => string
-  isOptionDisabled: (option: Option) => boolean
-  isOptionSelected: (optionValue: string) => boolean
-  handleSelectOption: (optionValue: string) => void
-  popoverContentRef: React.RefObject<HTMLDivElement | null>
-  selectionOptionsRef: React.RefObject<HTMLDivElement | null>
-}
+type SelectContentProps<Option> = Required<
+  Pick<
+    SelectProps<Option>,
+    | "options"
+    | "getOptionValue"
+    | "getOptionLabel"
+    | "isOptionDisabled"
+    | "noOptionsMessage"
+    | "enableSearch"
+    | "searchPlaceholder"
+    | "searchDebounceMilliseconds"
+    | "initialFocusOnFirstOption"
+    | "stickyGroups"
+    | "defaultOptionSize"
+    | "defaultOptionGroupSize"
+    | "loop"
+  >
+> &
+  Pick<
+    SelectProps<Option>,
+    | "getOptionGroup"
+    | "getOptionSize"
+    | "getOptionGroupSize"
+    | "gap"
+    | "overscan"
+  > & {
+    isOptionSelected: (optionValue: string) => boolean
+    handleSelectOption: (optionValue: string) => void
+    popoverContentRef: React.RefObject<HTMLDivElement | null>
+    selectionOptionsRef: React.RefObject<HTMLDivElement | null>
+  }
 
 export const SelectContent = <Option,>({
   options,
