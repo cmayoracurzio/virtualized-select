@@ -27,14 +27,30 @@ export const SelectOption = React.memo(
     handleSetFocusedOptionIndex,
     handleSelectOption,
   }: SelectOptionProps) => {
+    const { handlePointerOver, handleClick } = React.useMemo(() => {
+      if (isDisabled) {
+        return {
+          handlePointerOver: undefined,
+          handleClick: undefined,
+        }
+      }
+
+      return {
+        handlePointerOver: () => handleSetFocusedOptionIndex(index),
+        handleClick: () => handleSelectOption(optionValue),
+      }
+    }, [
+      handleSetFocusedOptionIndex,
+      handleSelectOption,
+      index,
+      optionValue,
+      isDisabled,
+    ])
+
     return (
       <div
-        onMouseOver={
-          isDisabled ? undefined : () => handleSetFocusedOptionIndex(index)
-        }
-        onClick={() =>
-          isDisabled ? undefined : handleSelectOption(optionValue)
-        }
+        onMouseOver={handlePointerOver}
+        onClick={handleClick}
         style={{
           height: `${size}px`,
           transform: `translateY(${start}px)`,
