@@ -5,7 +5,7 @@ import { ThemeProvider } from "next-themes"
 import { GitHubLinkButton } from "@/components/github-link"
 import { ToggleThemeButton } from "@/components/toggle-theme"
 
-import "@/styles/globals.css"
+import "@/app/globals.css"
 
 const font = IBM_Plex_Sans({
   subsets: ["latin"],
