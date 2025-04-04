@@ -80,11 +80,23 @@ export function Select<Option>({
   // Selection
   const [uncontrolledSingleSelection, setUncontrolledSingleSelection] =
     React.useState<string | null>(
-      isMulti || defaultSelection === undefined ? null : defaultSelection
+      isMulti
+        ? null
+        : selection !== undefined
+          ? selection
+          : defaultSelection !== undefined
+            ? defaultSelection
+            : null
     )
   const [uncontrolledMultiSelection, setUncontrolledMultiSelection] =
     React.useState<string[]>(
-      isMulti && defaultSelection !== undefined ? defaultSelection : []
+      !isMulti
+        ? []
+        : selection !== undefined
+          ? selection
+          : defaultSelection !== undefined
+            ? defaultSelection
+            : []
     )
 
   const {
