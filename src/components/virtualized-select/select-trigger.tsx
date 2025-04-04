@@ -26,7 +26,7 @@ export const SelectTrigger = React.memo(
           size={size}
         >
           <span className="truncate font-normal">{label}</span>
-          <ChevronDownIcon className="ml-auto size-4 shrink-0 opacity-50" />
+          <ChevronDownIcon className="ml-auto opacity-50" />
         </Button>
       </PopoverTrigger>
     )
