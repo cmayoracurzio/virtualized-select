@@ -222,6 +222,22 @@ export default function Page() {
             value={isMulti}
             onChange={handleIsMultiChange}
           />
+          <SliderField
+            label="options"
+            description="Array of options"
+            required={true}
+            value={numOptions}
+            minValue={0}
+            maxValue={OPTIONS.length}
+            onChange={handleNumOptionsChange}
+          />
+          <SwitchField
+            label="getOptionValue"
+            required={true}
+            description="Callback to get the value of an option"
+            value={true}
+            disabled={true}
+          />
           <ButtonField
             label="selection"
             description="Controlled selection"
@@ -240,22 +256,7 @@ export default function Page() {
             value={true}
             disabled={true}
           />
-          <SliderField
-            label="options"
-            description="Array of options"
-            required={true}
-            value={numOptions}
-            minValue={0}
-            maxValue={OPTIONS.length}
-            onChange={handleNumOptionsChange}
-          />
-          <SwitchField
-            label="getOptionValue"
-            required={true}
-            description="Callback to get the value of an option"
-            value={true}
-            disabled={true}
-          />
+
           <SwitchField
             label="getOptionLabel"
             description="Callback to get the label of an option"
