@@ -241,6 +241,7 @@ export function Select<Option>({
     if (isMulti) {
       const effectiveSelection =
         selection !== undefined ? selection : uncontrolledMultiSelection
+
       switch (effectiveSelection.length) {
         case 0:
           return "Select options..."
@@ -255,9 +256,15 @@ export function Select<Option>({
     } else {
       const effectiveSelection =
         selection !== undefined ? selection : uncontrolledSingleSelection
-      return effectiveSelection
-        ? (optionValueToLabel.get(effectiveSelection) ?? effectiveSelection)
-        : "Select an option..."
+
+      switch (effectiveSelection) {
+        case null:
+          return "Select an option..."
+        default:
+          return (
+            optionValueToLabel.get(effectiveSelection) ?? effectiveSelection
+          )
+      }
     }
   }, [
     isMulti,
