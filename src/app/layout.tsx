@@ -29,11 +29,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${font.className} bg-background text-foreground antialiased`}
-      >
+      <body className={`${font.className} antialiased`}>
         <ThemeProvider attribute="class" enableSystem>
-          <main className="mx-auto max-w-2xl space-y-12 p-6 pb-12">
+          <main className="mx-auto max-w-2xl space-y-12 p-6">
             <div className="flex justify-end">
               <ToggleThemeButton />
               <GitHubLinkButton />
