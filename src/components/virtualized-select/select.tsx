@@ -19,6 +19,7 @@ export function Select<Option>({
   getOptionLabel,
   getOptionGroup,
   isOptionDisabled,
+  size = "default",
   noOptionsMessage = "No options found.",
   isDisabled = false,
   closeOnChange = false,
@@ -272,6 +273,7 @@ export function Select<Option>({
         isOpen={isOpen}
         isDisabled={isDisabled}
         label={triggerLabel}
+        size={size}
       />
       <PopoverContent
         ref={popoverContentRef}

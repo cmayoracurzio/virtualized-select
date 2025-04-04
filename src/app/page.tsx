@@ -14,9 +14,18 @@ import { faker } from "@faker-js/faker"
 import { useDebounce } from "@/hooks/use-debounce"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { Slider } from "@/components/ui/slider"
 import { Switch } from "@/components/ui/switch"
-import { Select } from "@/components/virtualized-select/select"
+import { Select as VirtualizedSelect } from "@/components/virtualized-select/select"
+import { SelectSize } from "@/components/virtualized-select/types"
 
 type Option = {
   index: number
@@ -122,6 +131,7 @@ export default function Page() {
     [hasIsOptionDisabled]
   )
 
+  const [size, setSize] = useState<SelectSize>("default")
   const [noOptionsMessage, setNoOptionsMessage] = useState<string | undefined>(
     undefined
   )
@@ -152,7 +162,7 @@ export default function Page() {
         <div className="space-y-3">
           <h3 className="text-sm text-muted-foreground">Component:</h3>
           {isMulti ? (
-            <Select
+            <VirtualizedSelect
               isMulti={true}
               selection={multipleSelection}
               onSelectionChange={setMultipleSelection}
@@ -161,6 +171,7 @@ export default function Page() {
               getOptionLabel={getOptionLabel}
               getOptionGroup={getOptionGroup}
               isOptionDisabled={isOptionDisabled}
+              size={size}
               noOptionsMessage={noOptionsMessage}
               isDisabled={isDisabled}
               closeOnChange={closeOnChange}
@@ -178,7 +189,7 @@ export default function Page() {
               loop={loop}
             />
           ) : (
-            <Select
+            <VirtualizedSelect
               isMulti={false}
               selection={singleSelection}
               onSelectionChange={setSingleSelection}
@@ -187,6 +198,7 @@ export default function Page() {
               getOptionLabel={getOptionLabel}
               getOptionGroup={getOptionGroup}
               isOptionDisabled={isOptionDisabled}
+              size={size}
               noOptionsMessage={noOptionsMessage}
               isDisabled={isDisabled}
               closeOnChange={closeOnChange}
@@ -274,6 +286,12 @@ export default function Page() {
             description="Callback to determine if an option is disabled"
             value={hasIsOptionDisabled}
             onChange={setHasIsOptionDisabled}
+          />
+          <SelectField
+            label="size"
+            description="Size of the component (when closed)"
+            value={size}
+            onChange={setSize}
           />
           <InputField
             label="noOptionsMessage"
@@ -539,3 +557,30 @@ const SliderField = memo(
   }
 )
 SliderField.displayName = "SliderField"
+
+type SelectFieldProps = BaseDemoFieldProps & {
+  value: SelectSize
+  onChange: (value: SelectSize) => void
+}
+
+const SelectField = memo(
+  ({ value, onChange, ...demoFieldProps }: SelectFieldProps) => {
+    return (
+      <DemoField {...demoFieldProps}>
+        <Select value={value} onValueChange={onChange}>
+          <SelectTrigger className="w-52">
+            <SelectValue placeholder="Select a size" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectItem value="default">Default</SelectItem>
+              <SelectItem value="sm">Small</SelectItem>
+              <SelectItem value="lg">Large</SelectItem>
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+      </DemoField>
+    )
+  }
+)
+SelectField.displayName = "SelectField"

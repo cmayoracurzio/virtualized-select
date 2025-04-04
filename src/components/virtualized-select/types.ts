@@ -1,3 +1,12 @@
+import { VariantProps } from "class-variance-authority"
+
+import { buttonVariants } from "@/components/ui/button"
+
+export type SelectSize = Extract<
+  VariantProps<typeof buttonVariants>["size"],
+  "default" | "sm" | "lg"
+>
+
 type BaseSelectProps<Option> = {
   /** Array of options to display in the select */
   options: Option[]
@@ -13,6 +22,9 @@ type BaseSelectProps<Option> = {
 
   /** Optional function to determine if an option should be disabled */
   isOptionDisabled?: (option: Option) => boolean
+
+  /** Size of the select component, specifically the trigger button */
+  size?: SelectSize
 
   /** Message to display when there are no options */
   noOptionsMessage?: string
