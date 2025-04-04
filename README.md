@@ -1,6 +1,5 @@
 TODO:
 
-- Accessibility
 - Async loading of options
 - Support rendering more options beyond the browser's maximum height
 - Custom renderers (optionRenderer, optionGroupRenderer, selectionRenderer)

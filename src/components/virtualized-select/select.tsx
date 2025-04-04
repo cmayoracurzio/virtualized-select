@@ -278,6 +278,10 @@ export function Select<Option>({
       <PopoverContent
         ref={popoverContentRef}
         className="w-[var(--radix-popover-trigger-width)] divide-y overflow-hidden p-0"
+        id="select-options"
+        role="listbox"
+        aria-multiselectable={isMulti}
+        aria-label="Select dropdown options"
       >
         <SelectContent<Option>
           options={options}

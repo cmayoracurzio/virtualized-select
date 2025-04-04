@@ -19,14 +19,18 @@ export const SelectTrigger = React.memo(
       <PopoverTrigger asChild>
         <Button
           type="button"
-          aria-expanded={isOpen}
           variant="outline"
           className="w-full px-3"
           disabled={isDisabled}
           size={size}
+          role="combobox"
+          aria-expanded={isOpen}
+          aria-haspopup="listbox"
+          aria-controls="select-options"
+          aria-label="Select dropdown"
         >
           <span className="truncate font-normal">{label}</span>
-          <ChevronDownIcon className="ml-auto opacity-50" />
+          <ChevronDownIcon aria-hidden="true" className="ml-auto opacity-50" />
         </Button>
       </PopoverTrigger>
     )

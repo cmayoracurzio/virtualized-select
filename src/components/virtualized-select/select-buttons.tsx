@@ -46,12 +46,20 @@ export const SelectButtons = React.memo(
       if (isMulti) {
         return (
           <div ref={ref} className="flex items-center justify-between p-1">
-            <SelectButton disabled={isSelectAllDisabled} onClick={onSelectAll}>
-              <CheckIcon />
+            <SelectButton
+              disabled={isSelectAllDisabled}
+              onClick={onSelectAll}
+              aria-label="Select all options"
+            >
+              <CheckIcon aria-hidden="true" />
               <span className="truncate">Select all</span>
             </SelectButton>
-            <SelectButton disabled={isClearDisabled} onClick={onClear}>
-              <XIcon />
+            <SelectButton
+              disabled={isClearDisabled}
+              onClick={onClear}
+              aria-label="Clear selection"
+            >
+              <XIcon aria-hidden="true" />
               <span className="truncate">Clear all</span>
             </SelectButton>
           </div>
@@ -60,8 +68,12 @@ export const SelectButtons = React.memo(
 
       return (
         <div ref={ref} className="p-1">
-          <SelectButton disabled={isClearDisabled} onClick={onClear}>
-            <XIcon />
+          <SelectButton
+            disabled={isClearDisabled}
+            onClick={onClear}
+            aria-label="Clear selection"
+          >
+            <XIcon aria-hidden="true" />
             <span className="mr-auto truncate">Clear selection</span>
           </SelectButton>
         </div>

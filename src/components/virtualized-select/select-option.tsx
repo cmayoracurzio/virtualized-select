@@ -56,8 +56,11 @@ export const SelectOption = React.memo(
           transform: `translateY(${start}px)`,
         }}
         data-focused={isFocused}
-        data-disabled={isDisabled}
         className="absolute left-0 top-0 flex w-full select-none items-center overflow-hidden px-3 text-sm data-[focused=true]:bg-accent data-[disabled=true]:opacity-50"
+        role="option"
+        aria-label={optionLabel}
+        aria-selected={isSelected}
+        aria-disabled={isDisabled}
       >
         <CheckIcon
           data-selected={isSelected}
