@@ -139,6 +139,11 @@ export default function Page() {
     useState<number>(200)
   const [enableSelectionOptions, setEnableSelectionOptions] =
     useState<boolean>(true)
+  const [defaultOptionSize, setDefaultOptionSize] = useState<number>(36)
+  const [defaultOptionGroupSize, setDefaultOptionGroupSize] =
+    useState<number>(28)
+  const [gap, setGap] = useState<number>(0)
+  const [overscan, setOverscan] = useState<number>(10)
   const [loop, setLoop] = useState<boolean>(true)
 
   return (
@@ -166,6 +171,10 @@ export default function Page() {
               searchPlaceholder={searchPlaceholder}
               searchDebounceMilliseconds={searchDebounceMilliseconds}
               enableSelectionOptions={enableSelectionOptions}
+              defaultOptionSize={defaultOptionSize}
+              defaultOptionGroupSize={defaultOptionGroupSize}
+              gap={gap}
+              overscan={overscan}
               loop={loop}
             />
           ) : (
@@ -188,6 +197,10 @@ export default function Page() {
               searchPlaceholder={searchPlaceholder}
               searchDebounceMilliseconds={searchDebounceMilliseconds}
               enableSelectionOptions={enableSelectionOptions}
+              defaultOptionSize={defaultOptionSize}
+              defaultOptionGroupSize={defaultOptionGroupSize}
+              gap={gap}
+              overscan={overscan}
               loop={loop}
             />
           )}
@@ -211,15 +224,19 @@ export default function Page() {
           />
           <ButtonField
             label="selection"
-            description="Depends on selection mode"
-            required={true}
+            description="Controlled selection"
             buttonChildren="Randomize"
             onClick={handleSelectionChange}
           />
           <SwitchField
             label="onSelectionChange"
-            required={true}
             description="Callback to handle selection change"
+            value={true}
+            disabled={true}
+          />
+          <SwitchField
+            label="defaultSelection"
+            description="Default selection for uncontrolled mode"
             value={true}
             disabled={true}
           />
@@ -319,12 +336,50 @@ export default function Page() {
             value={enableSelectionOptions}
             onChange={setEnableSelectionOptions}
           />
-          {/* TODO: getOptionSize */}
-          {/* TODO: defaultOptionSize */}
-          {/* TODO: getOptionGroupSize */}
-          {/* TODO: defaultOptionGroupSize */}
-          {/* TODO: gap */}
-          {/* TODO: overscan */}
+          <SwitchField
+            label="getOptionSize"
+            description="Callback to get the size of an option"
+            value={true}
+            disabled={true}
+          />
+          <SliderField
+            label="defaultOptionSize"
+            description="Default size of options"
+            value={defaultOptionSize}
+            minValue={0}
+            maxValue={100}
+            onChange={setDefaultOptionSize}
+          />
+          <SwitchField
+            label="getOptionGroupSize"
+            description="Callback to get the size of an option group"
+            value={true}
+            disabled={true}
+          />
+          <SliderField
+            label="defaultOptionGroupSize"
+            description="Default size of option groups"
+            value={defaultOptionGroupSize}
+            minValue={0}
+            maxValue={100}
+            onChange={setDefaultOptionGroupSize}
+          />
+          <SliderField
+            label="gap"
+            description="Gap between options"
+            value={gap}
+            minValue={0}
+            maxValue={100}
+            onChange={setGap}
+          />
+          <SliderField
+            label="overscan"
+            description="Options rendered beyond the visible area"
+            value={overscan}
+            minValue={0}
+            maxValue={100}
+            onChange={setOverscan}
+          />
           <SwitchField
             label="loop"
             description="Loop through options when reaching the end"

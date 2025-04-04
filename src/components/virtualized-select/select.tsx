@@ -13,6 +13,7 @@ export function Select<Option>({
   options,
   isMulti,
   selection,
+  defaultSelection,
   onSelectionChange,
   getOptionValue,
   getOptionLabel,
@@ -36,11 +37,12 @@ export function Select<Option>({
   overscan,
   loop = false,
 }: SelectProps<Option>) {
+  // General
   const [isOpen, setIsOpen] = React.useState<boolean>(false)
   const popoverContentRef = React.useRef<HTMLDivElement>(null)
   const selectionOptionsRef = React.useRef<HTMLDivElement>(null)
 
-  // Selection
+  // Options
   const effectiveGetOptionLabel = React.useMemo(
     () => getOptionLabel ?? getOptionValue,
     [getOptionLabel, getOptionValue]
@@ -75,6 +77,16 @@ export function Select<Option>({
     options,
   ])
 
+  // Selection
+  const [uncontrolledSingleSelection, setUncontrolledSingleSelection] =
+    React.useState<string | null>(
+      isMulti || defaultSelection === undefined ? null : defaultSelection
+    )
+  const [uncontrolledMultiSelection, setUncontrolledMultiSelection] =
+    React.useState<string[]>(
+      isMulti && defaultSelection !== undefined ? defaultSelection : []
+    )
+
   const {
     isOptionSelected,
     handleSelectOption,
@@ -84,15 +96,22 @@ export function Select<Option>({
     handleSelectAll,
   } = React.useMemo(() => {
     if (isMulti) {
-      const selectionSet = new Set(selection)
+      const isControlled = selection !== undefined
+      const effectiveSelection = isControlled
+        ? selection
+        : uncontrolledMultiSelection
 
-      const setSelection = closeOnChange
+      const selectionSet = new Set(effectiveSelection)
+
+      const handleSelectionChange = closeOnChange
         ? (newSelection: string[]) => {
-            onSelectionChange(newSelection)
+            onSelectionChange?.(newSelection)
+            setUncontrolledMultiSelection(newSelection)
             setIsOpen(false)
           }
         : (newSelection: string[]) => {
-            onSelectionChange(newSelection)
+            onSelectionChange?.(newSelection)
+            setUncontrolledMultiSelection(newSelection)
             popoverContentRef.current?.focus()
           }
 
@@ -121,19 +140,19 @@ export function Select<Option>({
                 if (selectionSet.size > 1) {
                   const newSelection = new Set(selectionSet)
                   newSelection.delete(optionValue)
-                  setSelection([...newSelection])
+                  handleSelectionChange([...newSelection])
                 }
               } else {
-                setSelection([...selection, optionValue])
+                handleSelectionChange([...effectiveSelection, optionValue])
               }
             }
           : (optionValue: string) => {
               if (isOptionSelected(optionValue)) {
                 const newSelection = new Set(selectionSet)
                 newSelection.delete(optionValue)
-                setSelection([...newSelection])
+                handleSelectionChange([...newSelection])
               } else {
-                setSelection([...selection, optionValue])
+                handleSelectionChange([...effectiveSelection, optionValue])
               }
             },
         isClearDisabled:
@@ -142,49 +161,54 @@ export function Select<Option>({
           selectionSet.size === 0 ||
           options.length === 0,
         handleClear() {
-          setSelection([])
+          handleSelectionChange([])
         },
         isSelectAllDisabled,
         handleSelectAll() {
-          setSelection(enabledOptionValues)
+          handleSelectionChange(enabledOptionValues)
         },
       }
-    }
+    } else {
+      const effectiveSelection =
+        selection !== undefined ? selection : uncontrolledSingleSelection
 
-    const setSelection = closeOnChange
-      ? (newSelection: string | null) => {
-          onSelectionChange(newSelection)
-          setIsOpen(false)
-        }
-      : (newSelection: string | null) => {
-          onSelectionChange(newSelection)
-          popoverContentRef.current?.focus()
-        }
-
-    return {
-      isOptionSelected(optionValue: string) {
-        return selection === optionValue
-      },
-      handleSelectOption: forceSelection
-        ? (optionValue: string) => {
-            if (!isOptionSelected(optionValue)) {
-              setSelection(optionValue)
-            }
+      const handleSelectionChange = closeOnChange
+        ? (newSelection: string | null) => {
+            onSelectionChange?.(newSelection)
+            setUncontrolledSingleSelection(newSelection)
+            setIsOpen(false)
           }
-        : (optionValue: string) => {
-            const newSelection = isOptionSelected(optionValue)
-              ? null
-              : optionValue
-            setSelection(newSelection)
-          },
-      isClearDisabled:
-        !enableSelectionOptions ||
-        forceSelection ||
-        selection === null ||
-        options.length === 0,
-      handleClear() {
-        setSelection(null)
-      },
+        : (newSelection: string | null) => {
+            onSelectionChange?.(newSelection)
+            setUncontrolledSingleSelection(newSelection)
+            popoverContentRef.current?.focus()
+          }
+
+      return {
+        isOptionSelected(optionValue: string) {
+          return effectiveSelection === optionValue
+        },
+        handleSelectOption: forceSelection
+          ? (optionValue: string) => {
+              if (!isOptionSelected(optionValue)) {
+                handleSelectionChange(optionValue)
+              }
+            }
+          : (optionValue: string) => {
+              const newSelection = isOptionSelected(optionValue)
+                ? null
+                : optionValue
+              handleSelectionChange(newSelection)
+            },
+        isClearDisabled:
+          !enableSelectionOptions ||
+          forceSelection ||
+          effectiveSelection === null ||
+          options.length === 0,
+        handleClear() {
+          handleSelectionChange(null)
+        },
+      }
     }
   }, [
     closeOnChange,
@@ -192,28 +216,43 @@ export function Select<Option>({
     enabledOptionValues,
     forceSelection,
     isMulti,
-    options.length,
     onSelectionChange,
+    options.length,
     selection,
+    uncontrolledMultiSelection,
+    uncontrolledSingleSelection,
   ])
 
   // Trigger label
   const triggerLabel = React.useMemo(() => {
     if (isMulti) {
-      switch (selection.length) {
+      const effectiveSelection =
+        selection !== undefined ? selection : uncontrolledMultiSelection
+      switch (effectiveSelection.length) {
         case 0:
           return "Select options..."
         case 1:
-          return optionValueToLabel.get(selection[0]) ?? selection[0]
+          return (
+            optionValueToLabel.get(effectiveSelection[0]) ??
+            effectiveSelection[0]
+          )
         default:
-          return `${selection.length} options selected`
+          return `${effectiveSelection.length} options selected`
       }
     } else {
-      return selection
-        ? (optionValueToLabel.get(selection) ?? selection)
+      const effectiveSelection =
+        selection !== undefined ? selection : uncontrolledSingleSelection
+      return effectiveSelection
+        ? (optionValueToLabel.get(effectiveSelection) ?? effectiveSelection)
         : "Select an option..."
     }
-  }, [isMulti, selection, optionValueToLabel])
+  }, [
+    isMulti,
+    optionValueToLabel,
+    selection,
+    uncontrolledMultiSelection,
+    uncontrolledSingleSelection,
+  ])
 
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>

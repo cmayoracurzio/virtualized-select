@@ -71,13 +71,15 @@ export type SelectProps<Option> = BaseSelectProps<Option> &
     | {
         // Single selection props
         isMulti: false
-        selection: string | null
-        onSelectionChange: (selection: string | null) => void
+        selection?: string | null
+        defaultSelection?: string | null
+        onSelectionChange?: (selection: string | null) => void
       }
     | {
         // Multiple selection props
         isMulti: true
-        selection: string[]
-        onSelectionChange: (selection: string[]) => void
+        selection?: string[]
+        defaultSelection?: string[]
+        onSelectionChange?: (selection: string[]) => void
       }
   )
