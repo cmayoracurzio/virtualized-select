@@ -66,20 +66,19 @@ type BaseSelectProps<Option> = {
   loop?: boolean
 }
 
+type SingleSelectionProps = {
+  isMulti: false
+  selection?: string | null
+  defaultSelection?: string | null
+  onSelectionChange?: (selection: string | null) => void
+}
+
+type MultipleSelectionProps = {
+  isMulti: true
+  selection?: string[]
+  defaultSelection?: string[]
+  onSelectionChange?: (selection: string[]) => void
+}
+
 export type SelectProps<Option> = BaseSelectProps<Option> &
-  (
-    | {
-        // Single selection props
-        isMulti: false
-        selection?: string | null
-        defaultSelection?: string | null
-        onSelectionChange?: (selection: string | null) => void
-      }
-    | {
-        // Multiple selection props
-        isMulti: true
-        selection?: string[]
-        defaultSelection?: string[]
-        onSelectionChange?: (selection: string[]) => void
-      }
-  )
+  (SingleSelectionProps | MultipleSelectionProps)
