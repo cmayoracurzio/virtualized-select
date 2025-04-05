@@ -162,7 +162,7 @@ export default function Page() {
     <div className="space-y-6">
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         <div className="space-y-3">
-          <h3 className="text-sm text-muted-foreground">Component:</h3>
+          <h2 className="text-sm text-muted-foreground">Component:</h2>
           {isMulti ? (
             <VirtualizedSelect
               isMulti={true}
@@ -220,14 +220,14 @@ export default function Page() {
           )}
         </div>
         <div className="space-y-3">
-          <h3 className="text-sm text-muted-foreground">Installation:</h3>
+          <h2 className="text-sm text-muted-foreground">Installation:</h2>
           <p className="text-sm font-medium leading-8">
             shadcn/ui CLI installation coming soon
           </p>
         </div>
       </div>
       <div className="space-y-3">
-        <h3 className="text-sm text-muted-foreground">Props:</h3>
+        <h2 className="text-sm text-muted-foreground">Props:</h2>
         <div className="space-y-4">
           <SwitchField
             label="isMulti"
@@ -426,9 +426,9 @@ type DemoFieldProps = BaseDemoFieldProps & {
 const DemoField = memo(
   ({ label, description, required, children }: DemoFieldProps) => {
     return (
-      <div className="flex items-center justify-between gap-6 rounded-md border p-3 shadow-sm">
-        <div className="flex-1 space-y-0.5">
-          <p className="text-sm font-medium">
+      <div className="flex items-center justify-between rounded-md border p-3">
+        <div className="flex-1 truncate">
+          <h3 className="truncate text-sm font-medium">
             {label}
             {required && (
               <>
@@ -437,12 +437,12 @@ const DemoField = memo(
                 <span className="sr-only">Required</span>
               </>
             )}
-          </p>
-          <p className="text-sm text-muted-foreground">{description}</p>
+          </h3>
+          <span className="truncate text-sm text-muted-foreground">
+            {description}
+          </span>
         </div>
-        <div className="flex w-1/3 flex-col place-items-end justify-center gap-2">
-          {children}
-        </div>
+        <>{children}</>
       </div>
     )
   }
@@ -483,6 +483,7 @@ const InputField = memo(
           value={value ?? ""}
           onChange={handleChange}
           onKeyDown={handleKeyDown}
+          className="w-full max-w-48"
         />
       </DemoField>
     )
@@ -546,14 +547,16 @@ const SliderField = memo(
   }: SliderFieldProps) => {
     return (
       <DemoField {...demoFieldProps}>
-        <p className="text-right text-sm">{value}</p>
-        <Slider
-          min={minValue}
-          max={maxValue}
-          value={[value]}
-          step={1}
-          onValueChange={(values) => onChange(values[0])}
-        />
+        <div className="flex w-full max-w-48 flex-col gap-2">
+          <span className="text-right text-sm">{value}</span>
+          <Slider
+            min={minValue}
+            max={maxValue}
+            value={[value]}
+            step={1}
+            onValueChange={(values) => onChange(values[0])}
+          />
+        </div>
       </DemoField>
     )
   }
@@ -570,7 +573,7 @@ const SelectField = memo(
     return (
       <DemoField {...demoFieldProps}>
         <Select value={value} onValueChange={onChange}>
-          <SelectTrigger className="w-52">
+          <SelectTrigger className="w-full max-w-48">
             <SelectValue placeholder="Select a size" />
           </SelectTrigger>
           <SelectContent>
