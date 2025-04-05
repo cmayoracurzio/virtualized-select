@@ -31,14 +31,14 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`${font.className} antialiased`}>
         <ThemeProvider attribute="class" enableSystem>
-          <main className="mx-auto max-w-2xl space-y-12 p-6">
+          <main className="mx-auto max-w-2xl space-y-6 p-6">
             <div className="flex justify-end">
               <ToggleThemeButton />
               <GitHubLinkButton />
             </div>
 
             <div className="space-y-2">
-              <h1 className="text-4xl font-bold tracking-tight">{TITLE}</h1>
+              <h1 className="text-4xl font-bold tracking-tighter">{TITLE}</h1>
               <p className="text-muted-foreground">{DESCRIPTION}</p>
             </div>
 

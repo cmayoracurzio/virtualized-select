@@ -159,10 +159,10 @@ export default function Page() {
   const [loop, setLoop] = useState<boolean>(true)
 
   return (
-    <div className="space-y-6">
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-        <div className="space-y-3">
-          <h2 className="text-sm text-muted-foreground">Component:</h2>
+    <>
+      <div className="flex flex-col justify-between gap-6 md:flex-row md:gap-16">
+        <div className="flex-1 space-y-3">
+          <h2 className="text-sm font-medium">Component:</h2>
           {isMulti ? (
             <VirtualizedSelect
               isMulti={true}
@@ -220,14 +220,12 @@ export default function Page() {
           )}
         </div>
         <div className="space-y-3">
-          <h2 className="text-sm text-muted-foreground">Installation:</h2>
-          <p className="text-sm font-medium leading-8">
-            shadcn/ui CLI installation coming soon
-          </p>
+          <h2 className="text-sm font-medium">Installation:</h2>
+          <p className="text-sm">shadcn/ui CLI installation coming soon</p>
         </div>
       </div>
       <div className="space-y-3">
-        <h2 className="text-sm text-muted-foreground">Props:</h2>
+        <h2 className="text-sm font-medium">Props:</h2>
         <div className="space-y-4">
           <SwitchField
             label="isMulti"
@@ -409,7 +407,7 @@ export default function Page() {
           />
         </div>
       </div>
-    </div>
+    </>
   )
 }
 
