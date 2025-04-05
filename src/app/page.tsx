@@ -11,7 +11,7 @@ import {
 } from "react"
 import { faker } from "@faker-js/faker"
 
-import { useDebounce } from "@/hooks/use-debounce"
+import { useDebouncedCallback } from "@/hooks/use-debounced-callback"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import {
@@ -83,11 +83,13 @@ export default function Page() {
     }
   }, [getOptionValue, options])
 
-  const debouncedHandleOptionsChange = useDebounce((newNumOptions: number) => {
-    setOptions(OPTIONS.slice(0, newNumOptions))
-    setSingleSelection(null)
-    setMultipleSelection([])
-  }, 200)
+  const debouncedHandleOptionsChange = useDebouncedCallback(
+    (newNumOptions: number) => {
+      setOptions(OPTIONS.slice(0, newNumOptions))
+      setSingleSelection(null)
+      setMultipleSelection([])
+    }
+  )
 
   const handleNumOptionsChange = useCallback(
     (newNumOptions: number) => {
