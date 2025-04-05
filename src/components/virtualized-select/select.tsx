@@ -181,47 +181,47 @@ export function Select<Option>({
           handleSelectionChange(enabledOptionValues)
         },
       }
-    } else {
-      const effectiveSelection =
-        selection !== undefined ? selection : uncontrolledSingleSelection
+    }
 
-      const handleSelectionChange = closeOnChange
-        ? (newSelection: string | null) => {
-            onSelectionChange?.(newSelection)
-            setUncontrolledSingleSelection(newSelection)
-            setIsOpen(false)
-          }
-        : (newSelection: string | null) => {
-            onSelectionChange?.(newSelection)
-            setUncontrolledSingleSelection(newSelection)
-            popoverContentRef.current?.focus()
-          }
+    const effectiveSelection =
+      selection !== undefined ? selection : uncontrolledSingleSelection
 
-      return {
-        isOptionSelected(optionValue: string) {
-          return effectiveSelection === optionValue
-        },
-        handleSelectOption: forceSelection
-          ? (optionValue: string) => {
-              if (!isOptionSelected(optionValue)) {
-                handleSelectionChange(optionValue)
-              }
+    const handleSelectionChange = closeOnChange
+      ? (newSelection: string | null) => {
+          onSelectionChange?.(newSelection)
+          setUncontrolledSingleSelection(newSelection)
+          setIsOpen(false)
+        }
+      : (newSelection: string | null) => {
+          onSelectionChange?.(newSelection)
+          setUncontrolledSingleSelection(newSelection)
+          popoverContentRef.current?.focus()
+        }
+
+    return {
+      isOptionSelected(optionValue: string) {
+        return effectiveSelection === optionValue
+      },
+      handleSelectOption: forceSelection
+        ? (optionValue: string) => {
+            if (!isOptionSelected(optionValue)) {
+              handleSelectionChange(optionValue)
             }
-          : (optionValue: string) => {
-              const newSelection = isOptionSelected(optionValue)
-                ? null
-                : optionValue
-              handleSelectionChange(newSelection)
-            },
-        isClearDisabled:
-          !enableSelectionOptions ||
-          forceSelection ||
-          effectiveSelection === null ||
-          options.length === 0,
-        handleClear() {
-          handleSelectionChange(null)
-        },
-      }
+          }
+        : (optionValue: string) => {
+            const newSelection = isOptionSelected(optionValue)
+              ? null
+              : optionValue
+            handleSelectionChange(newSelection)
+          },
+      isClearDisabled:
+        !enableSelectionOptions ||
+        forceSelection ||
+        effectiveSelection === null ||
+        options.length === 0,
+      handleClear() {
+        handleSelectionChange(null)
+      },
     }
   }, [
     closeOnChange,
