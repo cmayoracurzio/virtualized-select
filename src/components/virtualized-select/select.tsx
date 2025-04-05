@@ -128,21 +128,6 @@ export function Select<Option>({
             popoverContentRef.current?.focus()
           }
 
-      let isSelectAllDisabled = !enableSelectionOptions || options.length === 0
-
-      if (enabledOptionValues.length > selectionSet.size) {
-        isSelectAllDisabled = false
-      } else if (!isSelectAllDisabled) {
-        isSelectAllDisabled = true
-
-        for (const option of enabledOptionValues) {
-          if (!selectionSet.has(option)) {
-            isSelectAllDisabled = false
-            break
-          }
-        }
-      }
-
       return {
         isOptionSelected(optionValue: string) {
           return selectionSet.has(optionValue)
@@ -176,7 +161,11 @@ export function Select<Option>({
         handleClear() {
           handleSelectionChange([])
         },
-        isSelectAllDisabled,
+        isSelectAllDisabled:
+          !enableSelectionOptions ||
+          options.length === 0 ||
+          enabledOptionValues.length <= selectionSet.size ||
+          enabledOptionValues.every((value) => selectionSet.has(value)),
         handleSelectAll() {
           handleSelectionChange(enabledOptionValues)
         },
