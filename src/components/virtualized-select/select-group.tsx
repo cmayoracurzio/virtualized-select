@@ -16,7 +16,7 @@ export const SelectOptionGroup = React.memo(
           transform: isSticky ? undefined : `translateY(${start}px)`,
         }}
         data-sticky={isSticky}
-        className="left-0 top-0 z-50 flex w-full select-none items-center overflow-hidden bg-popover px-4 text-xs font-medium text-muted-foreground outline outline-1 outline-border data-[sticky=false]:absolute data-[sticky=true]:sticky data-[sticky=true]:shadow-sm"
+        className="left-0 top-0 z-50 flex w-full select-none items-center overflow-hidden bg-popover px-4 text-xs font-medium text-muted-foreground outline outline-1 outline-border will-change-transform contain-layout contain-paint data-[sticky=false]:absolute data-[sticky=true]:sticky data-[sticky=true]:shadow-sm"
         role="group"
         aria-label={`Group: ${group}`}
       >
