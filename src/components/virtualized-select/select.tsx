@@ -14,6 +14,7 @@ export function Select<Option>({
   isMulti,
   selection,
   defaultSelection,
+  onOpenChange,
   onSelectionChange,
   getOptionValue,
   getOptionLabel,
@@ -41,11 +42,21 @@ export function Select<Option>({
   loop = false,
 }: SelectProps<Option>) {
   // General
+
   const [isOpen, setIsOpen] = React.useState<boolean>(false)
   const popoverContentRef = React.useRef<HTMLDivElement>(null)
   const selectionOptionsRef = React.useRef<HTMLDivElement>(null)
 
+  const handleOpenChange = React.useCallback(
+    (isOpen: boolean) => {
+      setIsOpen(isOpen)
+      onOpenChange?.(isOpen)
+    },
+    [onOpenChange]
+  )
+
   // Options
+
   const effectiveGetOptionLabel = React.useMemo(
     () => getOptionLabel ?? getOptionValue,
     [getOptionLabel, getOptionValue]
@@ -81,6 +92,7 @@ export function Select<Option>({
   ])
 
   // Selection
+
   const [uncontrolledSingleSelection, setUncontrolledSingleSelection] =
     React.useState<string | null>(
       isMulti
@@ -122,7 +134,7 @@ export function Select<Option>({
         ? (newSelection: string[]) => {
             onSelectionChange?.(newSelection)
             setUncontrolledMultiSelection(newSelection)
-            setIsOpen(false)
+            handleOpenChange(false)
           }
         : (newSelection: string[]) => {
             onSelectionChange?.(newSelection)
@@ -181,7 +193,7 @@ export function Select<Option>({
       ? (newSelection: string | null) => {
           onSelectionChange?.(newSelection)
           setUncontrolledSingleSelection(newSelection)
-          setIsOpen(false)
+          handleOpenChange(false)
         }
       : (newSelection: string | null) => {
           onSelectionChange?.(newSelection)
@@ -219,6 +231,7 @@ export function Select<Option>({
     enableSelectionOptions,
     enabledOptionValues,
     forceSelection,
+    handleOpenChange,
     isMulti,
     onSelectionChange,
     options.length,
@@ -228,6 +241,7 @@ export function Select<Option>({
   ])
 
   // Trigger label
+
   const triggerLabel = React.useMemo(() => {
     if (isMulti) {
       const effectiveSelection =
@@ -266,7 +280,7 @@ export function Select<Option>({
   ])
 
   return (
-    <Popover open={isOpen} onOpenChange={setIsOpen}>
+    <Popover open={isOpen} onOpenChange={handleOpenChange}>
       <SelectTrigger
         isOpen={isOpen}
         isDisabled={isDisabled}

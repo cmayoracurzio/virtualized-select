@@ -23,6 +23,9 @@ type BaseSelectProps<Option> = {
   /** Optional function to determine if an option should be disabled */
   isOptionDisabled?: (option: Option) => boolean
 
+  /** Optional function that is called when the select content is opened or closed */
+  onOpenChange?: (isOpen: boolean) => void
+
   /** Size of the select component, specifically the trigger button */
   size?: SelectSize
 

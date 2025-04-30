@@ -10,6 +10,7 @@ import {
   useState,
 } from "react"
 import { faker } from "@faker-js/faker"
+import { toast } from "sonner"
 
 import { useDebouncedCallback } from "@/hooks/use-debounced-callback"
 import { Button } from "@/components/ui/button"
@@ -110,8 +111,9 @@ export default function Page() {
       return undefined
     }
 
-    return (option: Option) =>
-      option.lastName.toUpperCase() + ", " + option.firstName
+    return (option: Option) => {
+      return option.lastName.toUpperCase() + ", " + option.firstName
+    }
   }, [hasOptionLabel])
 
   const [hasOptionGroup, setHasOptionGroup] = useState<boolean>(true)
@@ -121,17 +123,34 @@ export default function Page() {
       return undefined
     }
 
-    return (option: Option) => option.lastName.charAt(0).toUpperCase()
+    return (option: Option) => {
+      return option.lastName.charAt(0).toUpperCase()
+    }
   }, [hasOptionGroup])
 
   const [hasIsOptionDisabled, setHasIsOptionDisabled] = useState<boolean>(false)
 
-  const isOptionDisabled = useCallback(
-    (option: Option) => {
-      return hasIsOptionDisabled && option.index % 2 === 0
-    },
-    [hasIsOptionDisabled]
-  )
+  const isOptionDisabled = useMemo(() => {
+    if (!hasIsOptionDisabled) {
+      return undefined
+    }
+
+    return (option: Option) => {
+      return option.index % 2 === 0
+    }
+  }, [hasIsOptionDisabled])
+
+  const [hasOnOpenChange, setHasOnOpenChange] = useState<boolean>(false)
+
+  const onOpenChange = useMemo(() => {
+    if (!hasOnOpenChange) {
+      return undefined
+    }
+
+    return (isOpen: boolean) => {
+      toast.info(`Select is now ${isOpen ? "open" : "closed"}`)
+    }
+  }, [hasOnOpenChange])
 
   const [size, setSize] = useState<SelectSize>("default")
   const [minHeight, setMinHeight] = useState<number>(50)
@@ -175,6 +194,7 @@ export default function Page() {
               getOptionLabel={getOptionLabel}
               getOptionGroup={getOptionGroup}
               isOptionDisabled={isOptionDisabled}
+              onOpenChange={onOpenChange}
               size={size}
               minHeight={minHeight}
               maxHeight={maxHeight}
@@ -204,7 +224,10 @@ export default function Page() {
               getOptionLabel={getOptionLabel}
               getOptionGroup={getOptionGroup}
               isOptionDisabled={isOptionDisabled}
+              onOpenChange={onOpenChange}
               size={size}
+              minHeight={minHeight}
+              maxHeight={maxHeight}
               noOptionsMessage={noOptionsMessage}
               isDisabled={isDisabled}
               closeOnChange={closeOnChange}
@@ -272,7 +295,6 @@ export default function Page() {
             value={true}
             disabled={true}
           />
-
           <SwitchField
             label="getOptionLabel"
             description="Callback to get the label of an option"
@@ -290,6 +312,12 @@ export default function Page() {
             description="Callback to determine if an option is disabled"
             value={hasIsOptionDisabled}
             onChange={setHasIsOptionDisabled}
+          />
+          <SwitchField
+            label="onOpenChange"
+            description="Callback to handle when the dropdown is opened or closed"
+            value={hasOnOpenChange}
+            onChange={setHasOnOpenChange}
           />
           <SelectField
             label="size"

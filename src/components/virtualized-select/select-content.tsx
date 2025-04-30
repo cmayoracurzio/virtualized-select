@@ -73,6 +73,7 @@ export const SelectContent = <Option,>({
   selectionOptionsRef,
 }: SelectContentProps<Option>) => {
   // Options
+
   const [filteredOptions, setFilteredOptions] =
     React.useState<Option[]>(options)
 
@@ -103,6 +104,7 @@ export const SelectContent = <Option,>({
   )
 
   // Virtualization
+
   const effectiveGetOptionGroupSize = React.useMemo(
     () => getOptionGroupSize ?? (() => defaultOptionGroupSize),
     [defaultOptionGroupSize, getOptionGroupSize]
@@ -165,6 +167,7 @@ export const SelectContent = <Option,>({
   })
 
   // Focus
+
   const initialFocusedOptionIndex = React.useMemo(() => {
     if (!initialFocusOnFirstOption) {
       return -1
@@ -187,6 +190,7 @@ export const SelectContent = <Option,>({
   )
 
   // Keyboard navigation
+
   const getNextValidOptionIndex = React.useCallback(
     (currentIndex: number, direction: "up" | "down"): number => {
       let nextIndex = currentIndex
@@ -331,6 +335,7 @@ export const SelectContent = <Option,>({
   }, [handleKeyDown, popoverContentRef])
 
   // Search
+
   const timeoutRef = React.useRef<NodeJS.Timeout | null>(null)
 
   const debouncedHandleSearch = React.useCallback(

@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import { IBM_Plex_Sans } from "next/font/google"
 import { ThemeProvider } from "next-themes"
 
+import { Toaster } from "@/components/ui/sonner"
 import { GitHubLinkButton } from "@/components/github-link"
 import { ToggleThemeButton } from "@/components/toggle-theme"
 
@@ -44,6 +45,7 @@ export default function RootLayout({
 
             {children}
           </main>
+          <Toaster closeButton />
         </ThemeProvider>
       </body>
     </html>
