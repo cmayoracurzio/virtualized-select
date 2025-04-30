@@ -1,5 +1,5 @@
 import * as React from "react"
-import { ChevronDownIcon } from "lucide-react"
+import { ChevronDownIcon, Loader2Icon } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { PopoverTrigger } from "@/components/ui/popover"
@@ -7,21 +7,30 @@ import { PopoverTrigger } from "@/components/ui/popover"
 import { SelectSize } from "./types"
 
 type SelectTriggerProps = {
+  size: SelectSize
   isOpen: boolean
+  isLoading: boolean
   isDisabled: boolean
   label: string
-  size?: SelectSize
+  loadingMessage: string
 }
 
 export const SelectTrigger = React.memo(
-  ({ isOpen, isDisabled, label, size }: SelectTriggerProps) => {
+  ({
+    size,
+    isOpen,
+    isLoading,
+    isDisabled,
+    label,
+    loadingMessage,
+  }: SelectTriggerProps) => {
     return (
       <PopoverTrigger asChild>
         <Button
           type="button"
           variant="outline"
-          className="w-full px-3"
-          disabled={isDisabled}
+          className="w-full"
+          disabled={isDisabled || isLoading}
           size={size}
           role="combobox"
           aria-expanded={isOpen}
@@ -29,8 +38,20 @@ export const SelectTrigger = React.memo(
           aria-controls="select-options"
           aria-label="Select dropdown"
         >
-          <span className="truncate font-normal">{label}</span>
-          <ChevronDownIcon aria-hidden="true" className="ml-auto opacity-50" />
+          {isLoading ? (
+            <>
+              <span className="truncate font-normal">{loadingMessage}</span>
+              <Loader2Icon className="ml-auto opacity-50 motion-safe:animate-spin" />
+            </>
+          ) : (
+            <>
+              <span className="truncate font-normal">{label}</span>
+              <ChevronDownIcon
+                aria-hidden="true"
+                className="ml-auto opacity-50"
+              />
+            </>
+          )}
         </Button>
       </PopoverTrigger>
     )

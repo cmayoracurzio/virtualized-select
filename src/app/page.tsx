@@ -158,6 +158,10 @@ export default function Page() {
   const [noOptionsMessage, setNoOptionsMessage] = useState<string | undefined>(
     undefined
   )
+  const [loadingMessage, setLoadingMessage] = useState<string | undefined>(
+    undefined
+  )
+  const [isLoading, setIsLoading] = useState<boolean>(false)
   const [isDisabled, setIsDisabled] = useState<boolean>(false)
   const [closeOnChange, setCloseOnChange] = useState<boolean>(false)
   const [forceSelection, setForceSelection] = useState<boolean>(false)
@@ -199,6 +203,8 @@ export default function Page() {
               minHeight={minHeight}
               maxHeight={maxHeight}
               noOptionsMessage={noOptionsMessage}
+              loadingMessage={loadingMessage}
+              isLoading={isLoading}
               isDisabled={isDisabled}
               closeOnChange={closeOnChange}
               forceSelection={forceSelection}
@@ -229,6 +235,8 @@ export default function Page() {
               minHeight={minHeight}
               maxHeight={maxHeight}
               noOptionsMessage={noOptionsMessage}
+              loadingMessage={loadingMessage}
+              isLoading={isLoading}
               isDisabled={isDisabled}
               closeOnChange={closeOnChange}
               forceSelection={forceSelection}
@@ -346,6 +354,18 @@ export default function Page() {
             description="Message when there are no options"
             value={noOptionsMessage}
             onChange={setNoOptionsMessage}
+          />
+          <InputField
+            label="loadingMessage"
+            description="Message when loading options"
+            value={loadingMessage}
+            onChange={setLoadingMessage}
+          />
+          <SwitchField
+            label="isLoading"
+            description="Show loading state"
+            value={isLoading}
+            onChange={setIsLoading}
           />
           <SwitchField
             label="isDisabled"

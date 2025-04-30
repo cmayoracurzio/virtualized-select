@@ -38,6 +38,12 @@ type BaseSelectProps<Option> = {
   /** Message to display when there are no options */
   noOptionsMessage?: string
 
+  /** Message to display when loading options */
+  loadingMessage?: string
+
+  /** Whether to show a loading state */
+  isLoading?: boolean
+
   /** Whether the component is disabled */
   isDisabled?: boolean
 

@@ -24,6 +24,8 @@ export function Select<Option>({
   minHeight = 50,
   maxHeight = 200,
   noOptionsMessage = "No options found.",
+  loadingMessage = "Loading options...",
+  isLoading = false,
   isDisabled = false,
   closeOnChange = false,
   forceSelection = false,
@@ -282,10 +284,12 @@ export function Select<Option>({
   return (
     <Popover open={isOpen} onOpenChange={handleOpenChange}>
       <SelectTrigger
+        size={size}
         isOpen={isOpen}
+        isLoading={isLoading}
         isDisabled={isDisabled}
         label={triggerLabel}
-        size={size}
+        loadingMessage={loadingMessage}
       />
       <PopoverContent
         ref={popoverContentRef}
