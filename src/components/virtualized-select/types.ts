@@ -26,6 +26,12 @@ type BaseSelectProps<Option> = {
   /** Size of the select component, specifically the trigger button */
   size?: SelectSize
 
+  /** Minimum height in pixels of the options list */
+  minHeight?: number
+
+  /** Maximum height in pixels of the options list */
+  maxHeight?: number
+
   /** Message to display when there are no options */
   noOptionsMessage?: string
 

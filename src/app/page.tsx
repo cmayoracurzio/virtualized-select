@@ -83,13 +83,13 @@ export default function Page() {
     }
   }, [getOptionValue, options])
 
-  const debouncedHandleOptionsChange = useDebouncedCallback(
-    (newNumOptions: number) => {
-      setOptions(OPTIONS.slice(0, newNumOptions))
-      setSingleSelection(null)
-      setMultipleSelection([])
-    }
-  )
+  const handleOptionsChange = useCallback((newNumOptions: number) => {
+    setOptions(OPTIONS.slice(0, newNumOptions))
+    setSingleSelection(null)
+    setMultipleSelection([])
+  }, [])
+
+  const debouncedHandleOptionsChange = useDebouncedCallback(handleOptionsChange)
 
   const handleNumOptionsChange = useCallback(
     (newNumOptions: number) => {
@@ -134,6 +134,8 @@ export default function Page() {
   )
 
   const [size, setSize] = useState<SelectSize>("default")
+  const [minHeight, setMinHeight] = useState<number>(50)
+  const [maxHeight, setMaxHeight] = useState<number>(200)
   const [noOptionsMessage, setNoOptionsMessage] = useState<string | undefined>(
     undefined
   )
@@ -174,6 +176,8 @@ export default function Page() {
               getOptionGroup={getOptionGroup}
               isOptionDisabled={isOptionDisabled}
               size={size}
+              minHeight={minHeight}
+              maxHeight={maxHeight}
               noOptionsMessage={noOptionsMessage}
               isDisabled={isDisabled}
               closeOnChange={closeOnChange}
@@ -292,6 +296,22 @@ export default function Page() {
             description="Size of the component (when closed)"
             value={size}
             onChange={setSize}
+          />
+          <SliderField
+            label="minHeight"
+            description="Minimum height in pixels of the options list"
+            value={minHeight}
+            minValue={0}
+            maxValue={1000}
+            onChange={setMinHeight}
+          />
+          <SliderField
+            label="maxHeight"
+            description="Maximum height in pixels of the options list"
+            value={maxHeight}
+            minValue={0}
+            maxValue={1000}
+            onChange={setMaxHeight}
           />
           <InputField
             label="noOptionsMessage"

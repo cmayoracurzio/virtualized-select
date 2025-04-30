@@ -20,6 +20,8 @@ export function Select<Option>({
   getOptionGroup,
   isOptionDisabled,
   size = "default",
+  minHeight = 50,
+  maxHeight = 200,
   noOptionsMessage = "No options found.",
   isDisabled = false,
   closeOnChange = false,
@@ -273,15 +275,17 @@ export function Select<Option>({
       />
       <PopoverContent
         ref={popoverContentRef}
-        className="w-[var(--radix-popover-trigger-width)] divide-y overflow-hidden p-0"
         id="select-options"
         role="listbox"
         aria-multiselectable={isMulti}
         aria-label="Select dropdown options"
+        className="max-h-[var(--radix-popover-content-available-height)] w-[var(--radix-popover-trigger-width)] divide-y overflow-hidden p-0"
       >
         <SelectContent<Option>
           options={options}
           getOptionValue={getOptionValue}
+          minHeight={minHeight}
+          maxHeight={maxHeight}
           noOptionsMessage={noOptionsMessage}
           enableSearch={enableSearch}
           searchPlaceholder={searchPlaceholder}

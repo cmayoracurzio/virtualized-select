@@ -19,6 +19,8 @@ type SelectContentProps<Option> = Required<
     | "getOptionValue"
     | "getOptionLabel"
     | "isOptionDisabled"
+    | "minHeight"
+    | "maxHeight"
     | "noOptionsMessage"
     | "enableSearch"
     | "searchPlaceholder"
@@ -47,6 +49,8 @@ type SelectContentProps<Option> = Required<
 export const SelectContent = <Option,>({
   options,
   getOptionValue,
+  minHeight,
+  maxHeight,
   noOptionsMessage,
   initialFocusOnFirstOption,
   stickyGroups,
@@ -377,7 +381,11 @@ export const SelectContent = <Option,>({
       <div
         tabIndex={-1}
         ref={scrollElementRef}
-        className="max-h-[12.5rem] overflow-y-auto overflow-x-hidden outline-none"
+        className="overflow-y-auto overflow-x-hidden outline-none"
+        style={{
+          minHeight,
+          maxHeight,
+        }}
       >
         {effectiveOptions.length === 0 ? (
           <div className="truncate px-2 py-6 text-center text-sm">
