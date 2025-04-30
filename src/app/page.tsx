@@ -34,7 +34,7 @@ type Option = {
   lastName: string
 }
 
-const OPTIONS: Option[] = Array.from({ length: 200000 }, (_, index) => ({
+const OPTIONS: Option[] = Array.from({ length: 400_000 }, (_, index) => ({
   index,
   firstName: faker.person.firstName(),
   lastName: faker.person.lastName(),
@@ -42,9 +42,7 @@ const OPTIONS: Option[] = Array.from({ length: 200000 }, (_, index) => ({
 
 export default function Page() {
   const [isMulti, setIsMulti] = useState<boolean>(true)
-  const [numOptions, setNumOptions] = useState<number>(
-    Math.floor(OPTIONS.length)
-  )
+  const [numOptions, setNumOptions] = useState<number>(OPTIONS.length)
   const [options, setOptions] = useState<Option[]>(OPTIONS.slice(0, numOptions))
 
   const getOptionValue = useCallback((option: Option) => {
