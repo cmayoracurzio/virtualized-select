@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import { IBM_Plex_Sans } from "next/font/google"
 import { ThemeProvider } from "next-themes"
 
+import { SITE_DESCRIPTION, SITE_TITLE } from "@/lib/constants"
 import { Toaster } from "@/components/ui/sonner"
 import { GitHubLinkButton } from "@/components/github-link"
 import { ToggleThemeButton } from "@/components/toggle-theme"
@@ -13,14 +14,9 @@ const font = IBM_Plex_Sans({
   weight: ["100", "200", "300", "400", "500", "600", "700"],
   style: ["normal", "italic"],
 })
-
-const TITLE = "Virtualized Select"
-
-const DESCRIPTION = "A shadcn/ui recipe for handling thousands of options."
-
 export const metadata: Metadata = {
-  title: TITLE,
-  description: DESCRIPTION,
+  title: SITE_TITLE,
+  description: SITE_DESCRIPTION,
 }
 
 export default function RootLayout({
@@ -30,7 +26,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${font.className} antialiased`}>
+      <body className={font.className}>
         <ThemeProvider attribute="class" enableSystem>
           <main className="mx-auto max-w-2xl space-y-6 p-6">
             <div className="flex justify-end">
@@ -39,8 +35,10 @@ export default function RootLayout({
             </div>
 
             <div className="space-y-2">
-              <h1 className="text-4xl font-bold tracking-tighter">{TITLE}</h1>
-              <p className="text-muted-foreground">{DESCRIPTION}</p>
+              <h1 className="text-4xl font-bold tracking-tighter">
+                {SITE_TITLE}
+              </h1>
+              <p className="text-muted-foreground">{SITE_DESCRIPTION}</p>
             </div>
 
             {children}

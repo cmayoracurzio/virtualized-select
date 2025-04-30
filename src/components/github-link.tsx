@@ -1,6 +1,5 @@
+import { GITHUB_REPO_URL } from "@/lib/constants"
 import { Button } from "@/components/ui/button"
-
-const GITHUB_REPO_URL = "https://github.com/cmayoracurzio/virtualized-select"
 
 export function GitHubLinkButton() {
   return (
