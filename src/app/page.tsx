@@ -501,7 +501,7 @@ type InputFieldProps = BaseDemoFieldProps & {
 }
 
 const InputField = memo(
-  ({ value, onChange, ...demoFieldProps }: InputFieldProps) => {
+  ({ value, onChange, label, description, required }: InputFieldProps) => {
     const handleChange = useCallback(
       (event: ChangeEvent<HTMLInputElement>) => {
         onChange(event.target.value)
@@ -523,7 +523,7 @@ const InputField = memo(
     )
 
     return (
-      <DemoField {...demoFieldProps}>
+      <DemoField label={label} description={description} required={required}>
         <Input
           placeholder={value === undefined ? "undefined" : undefined}
           value={value ?? ""}
@@ -543,9 +543,15 @@ type ButtonFieldProps = BaseDemoFieldProps & {
 }
 
 const ButtonField = memo(
-  ({ buttonChildren, onClick, ...demoFieldProps }: ButtonFieldProps) => {
+  ({
+    buttonChildren,
+    onClick,
+    label,
+    description,
+    required,
+  }: ButtonFieldProps) => {
     return (
-      <DemoField {...demoFieldProps}>
+      <DemoField label={label} description={description} required={required}>
         <Button variant="outline" onClick={onClick}>
           {buttonChildren}
         </Button>
@@ -562,9 +568,16 @@ type SwitchFieldProps = BaseDemoFieldProps & {
 }
 
 const SwitchField = memo(
-  ({ value, onChange, disabled, ...demoFieldProps }: SwitchFieldProps) => {
+  ({
+    value,
+    onChange,
+    disabled,
+    label,
+    description,
+    required,
+  }: SwitchFieldProps) => {
     return (
-      <DemoField {...demoFieldProps}>
+      <DemoField label={label} description={description} required={required}>
         <Switch
           checked={value}
           onCheckedChange={onChange}
@@ -589,10 +602,12 @@ const SliderField = memo(
     minValue,
     maxValue,
     onChange,
-    ...demoFieldProps
+    label,
+    description,
+    required,
   }: SliderFieldProps) => {
     return (
-      <DemoField {...demoFieldProps}>
+      <DemoField label={label} description={description} required={required}>
         <div className="flex w-full max-w-48 flex-col gap-2">
           <span className="text-right text-sm">{value}</span>
           <Slider
@@ -615,9 +630,9 @@ type SelectFieldProps = BaseDemoFieldProps & {
 }
 
 const SelectField = memo(
-  ({ value, onChange, ...demoFieldProps }: SelectFieldProps) => {
+  ({ value, onChange, label, description, required }: SelectFieldProps) => {
     return (
-      <DemoField {...demoFieldProps}>
+      <DemoField label={label} description={description} required={required}>
         <Select value={value} onValueChange={onChange}>
           <SelectTrigger className="w-full max-w-48">
             <SelectValue placeholder="Select a size" />
