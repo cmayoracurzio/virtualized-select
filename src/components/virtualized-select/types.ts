@@ -38,16 +38,16 @@ type BaseSelectProps<Option> = {
   /** Message to display when there are no options */
   noOptionsMessage?: string
 
-  /** Whether the entire select component is disabled */
+  /** Whether the component is disabled */
   isDisabled?: boolean
 
-  /** Whether to close the dropdown when selection changes */
+  /** Whether to close the popover when selection changes */
   closeOnChange?: boolean
 
   /** Whether to force at least one selected option */
   forceSelection?: boolean
 
-  /** Whether to focus the first option when opening the dropdown */
+  /** Whether to focus the first option when opening the popover */
   initialFocusOnFirstOption?: boolean
 
   /** Whether to make option groups sticky while scrolling */
