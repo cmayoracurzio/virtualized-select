@@ -130,7 +130,7 @@ export const SelectContent = <Option,>({
   const activeOptionGroupIndexRef = React.useRef<number>(-1)
 
   const rangeExtractor = React.useMemo(() => {
-    if (!stickyGroups) {
+    if (getOptionGroup === undefined || !stickyGroups) {
       return undefined
     }
 
@@ -145,7 +145,7 @@ export const SelectContent = <Option,>({
 
       return [...next].sort((a, b) => a - b)
     }
-  }, [optionGroupIndexes, stickyGroups])
+  }, [getOptionGroup, optionGroupIndexes, stickyGroups])
 
   const scrollElementRef = React.useRef<HTMLDivElement>(null)
 
