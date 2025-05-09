@@ -34,7 +34,7 @@ type Option = {
   lastName: string
 }
 
-const OPTIONS: Option[] = Array.from({ length: 400_000 }, (_, index) => ({
+const OPTIONS: Option[] = Array.from({ length: 100_000 }, (_, index) => ({
   index,
   firstName: faker.person.firstName(),
   lastName: faker.person.lastName(),
