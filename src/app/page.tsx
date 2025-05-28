@@ -10,7 +10,6 @@ import {
   useState,
 } from "react"
 import { faker } from "@faker-js/faker"
-import { toast } from "sonner"
 
 import { useDebouncedCallback } from "@/hooks/use-debounced-callback"
 import { Button } from "@/components/ui/button"
@@ -138,18 +137,6 @@ export default function Page() {
     }
   }, [hasIsOptionDisabled])
 
-  const [hasOnOpenChange, setHasOnOpenChange] = useState<boolean>(false)
-
-  const onOpenChange = useMemo(() => {
-    if (!hasOnOpenChange) {
-      return undefined
-    }
-
-    return (isOpen: boolean) => {
-      toast.info(`Select is now ${isOpen ? "open" : "closed"}`)
-    }
-  }, [hasOnOpenChange])
-
   const [size, setSize] = useState<SelectSize>("default")
   const [minHeight, setMinHeight] = useState<number>(50)
   const [maxHeight, setMaxHeight] = useState<number>(200)
@@ -196,7 +183,6 @@ export default function Page() {
               getOptionLabel={getOptionLabel}
               getOptionGroup={getOptionGroup}
               isOptionDisabled={isOptionDisabled}
-              onOpenChange={onOpenChange}
               size={size}
               minHeight={minHeight}
               maxHeight={maxHeight}
@@ -228,7 +214,6 @@ export default function Page() {
               getOptionLabel={getOptionLabel}
               getOptionGroup={getOptionGroup}
               isOptionDisabled={isOptionDisabled}
-              onOpenChange={onOpenChange}
               size={size}
               minHeight={minHeight}
               maxHeight={maxHeight}
@@ -278,8 +263,8 @@ export default function Page() {
           />
           <SwitchField
             label="getOptionValue"
-            required={true}
             description="Callback to get the value of an option"
+            required={true}
             value={true}
             disabled={true}
           />
@@ -322,8 +307,8 @@ export default function Page() {
           <SwitchField
             label="onOpenChange"
             description="Callback to handle when the dropdown is opened or closed"
-            value={hasOnOpenChange}
-            onChange={setHasOnOpenChange}
+            value={true}
+            disabled={true}
           />
           <SelectField
             label="size"

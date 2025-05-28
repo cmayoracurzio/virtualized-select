@@ -8,28 +8,23 @@ type SelectButtonProps = Pick<
   "disabled" | "onClick" | "children"
 >
 
-const SelectButton = React.memo(
-  React.forwardRef<HTMLButtonElement, SelectButtonProps>(
-    ({ disabled, onClick, children }, ref) => {
-      return (
-        <Button
-          ref={ref}
-          type="button"
-          variant="ghost"
-          size="sm"
-          disabled={disabled}
-          onClick={onClick}
-          className="w-full select-none overflow-hidden rounded-sm text-sm font-normal"
-        >
-          {children}
-        </Button>
-      )
-    }
+const SelectButton = ({ disabled, onClick, children }: SelectButtonProps) => {
+  return (
+    <Button
+      type="button"
+      variant="ghost"
+      size="sm"
+      disabled={disabled}
+      onClick={onClick}
+      className="w-full select-none overflow-hidden rounded-sm text-sm font-normal"
+    >
+      {children}
+    </Button>
   )
-)
-SelectButton.displayName = "SelectButton"
+}
 
 type SelectButtonsProps = {
+  ref: React.RefObject<HTMLDivElement | null>
   isMulti: boolean
   onSelectAll?: () => void
   onClear?: () => void
@@ -38,47 +33,50 @@ type SelectButtonsProps = {
 }
 
 export const SelectButtons = React.memo(
-  React.forwardRef<HTMLDivElement, SelectButtonsProps>(
-    (
-      { isMulti, onSelectAll, onClear, isSelectAllDisabled, isClearDisabled },
-      ref
-    ) => {
-      if (isMulti) {
-        return (
-          <div ref={ref} className="flex items-center justify-between p-1">
-            <SelectButton
-              disabled={isSelectAllDisabled}
-              onClick={onSelectAll}
-              aria-label="Select all options"
-            >
-              <CheckIcon aria-hidden="true" />
-              <span className="truncate">Select all</span>
-            </SelectButton>
-            <SelectButton
-              disabled={isClearDisabled}
-              onClick={onClear}
-              aria-label="Clear selection"
-            >
-              <XIcon aria-hidden="true" />
-              <span className="truncate">Clear all</span>
-            </SelectButton>
-          </div>
-        )
-      }
-
+  ({
+    ref,
+    isMulti,
+    onSelectAll,
+    onClear,
+    isSelectAllDisabled,
+    isClearDisabled,
+  }: SelectButtonsProps) => {
+    if (isMulti) {
       return (
-        <div ref={ref} className="p-1">
+        <div ref={ref} className="flex items-center justify-between p-1">
+          <SelectButton
+            disabled={isSelectAllDisabled}
+            onClick={onSelectAll}
+            aria-label="Select all options"
+          >
+            <CheckIcon aria-hidden="true" />
+            <span className="truncate">Select all</span>
+          </SelectButton>
           <SelectButton
             disabled={isClearDisabled}
             onClick={onClear}
             aria-label="Clear selection"
           >
             <XIcon aria-hidden="true" />
-            <span className="mr-auto truncate">Clear selection</span>
+            <span className="truncate">Clear all</span>
           </SelectButton>
         </div>
       )
     }
-  )
+
+    return (
+      <div ref={ref} className="p-1">
+        <SelectButton
+          disabled={isClearDisabled}
+          onClick={onClear}
+          aria-label="Clear selection"
+        >
+          <XIcon aria-hidden="true" />
+          <span className="mr-auto truncate">Clear selection</span>
+        </SelectButton>
+      </div>
+    )
+  }
 )
+
 SelectButtons.displayName = "SelectButtons"

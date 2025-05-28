@@ -74,8 +74,19 @@ export const SelectContent = <Option,>({
 }: SelectContentProps<Option>) => {
   // Options
 
-  const [filteredOptions, setFilteredOptions] =
-    React.useState<Option[]>(options)
+  const [search, setSearch] = React.useState<string>("")
+
+  const filteredOptions = React.useMemo(() => {
+    const formattedSearch = search.trim().toLowerCase()
+
+    if (formattedSearch === "") {
+      return options
+    }
+
+    return options.filter((option) =>
+      getOptionLabel(option).trim().toLowerCase().includes(formattedSearch)
+    )
+  }, [getOptionLabel, options, search])
 
   const { effectiveOptions, optionGroupIndexes } = React.useMemo(() => {
     if (getOptionGroup === undefined) {
@@ -339,36 +350,20 @@ export const SelectContent = <Option,>({
   const timeoutRef = React.useRef<NodeJS.Timeout | null>(null)
 
   const debouncedHandleSearch = React.useCallback(
-    (search: string) => {
+    (newSearch: string) => {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current)
       }
 
       timeoutRef.current = setTimeout(() => {
-        setFilteredOptions(() => {
-          if (search === "") {
-            return options
-          }
-
-          const formattedSearch = search.trim().toLowerCase()
-
-          return options.filter((option) =>
-            getOptionLabel(option)
-              .trim()
-              .toLowerCase()
-              .includes(formattedSearch)
-          )
-        })
-
+        setSearch(newSearch)
         handleSetFocusedOptionIndex(initialFocusedOptionIndex)
         virtualizer.scrollToIndex(0)
       }, searchDebounceMilliseconds)
     },
     [
-      getOptionLabel,
       handleSetFocusedOptionIndex,
       initialFocusedOptionIndex,
-      options,
       searchDebounceMilliseconds,
       virtualizer,
     ]
