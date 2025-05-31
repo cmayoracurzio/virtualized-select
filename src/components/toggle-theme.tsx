@@ -28,16 +28,12 @@ export function ToggleThemeButton() {
     })
   }, [setTheme])
 
-  if (!isMounted) {
-    return (
-      <Button size="icon" variant="ghost">
-        <MonitorIcon />
-      </Button>
-    )
-  }
-
   const Icon =
-    theme === "system" ? MonitorIcon : theme === "light" ? SunIcon : MoonIcon
+    !isMounted || theme === "system"
+      ? MonitorIcon
+      : theme === "light"
+        ? SunIcon
+        : MoonIcon
 
   return (
     <Button size="icon" variant="ghost" onClick={toggleTheme}>
