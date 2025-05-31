@@ -475,7 +475,7 @@ type DemoFieldProps = BaseDemoFieldProps & {
 const DemoField = memo(
   ({ label, description, required, children }: DemoFieldProps) => {
     return (
-      <div className="flex items-center justify-between rounded-md border p-3">
+      <div className="bg-card flex items-center justify-between rounded-md border p-3">
         <div className="truncate">
           <h3 className="truncate text-sm font-medium">
             {label}
@@ -487,7 +487,7 @@ const DemoField = memo(
               </>
             )}
           </h3>
-          <span className="truncate text-sm text-muted-foreground">
+          <span className="text-muted-foreground truncate text-sm">
             {description}
           </span>
         </div>
