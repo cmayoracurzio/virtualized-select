@@ -381,7 +381,7 @@ export const SelectContent = <Option,>({
       <div
         tabIndex={-1}
         ref={scrollElementRef}
-        className="overflow-y-auto overflow-x-hidden outline-none"
+        className="overflow-x-hidden overflow-y-auto outline-hidden"
         style={{
           minHeight,
           maxHeight,

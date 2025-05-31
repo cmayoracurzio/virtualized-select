@@ -27,13 +27,13 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={font.className}>
         <ThemeProvider attribute="class" enableSystem>
-          <main className="mx-auto max-w-2xl space-y-6 p-6">
+          <main className="mx-auto flex max-w-2xl flex-col gap-6 p-6">
             <div className="flex justify-end">
               <ToggleThemeButton />
               <GitHubLinkButton />
             </div>
 
-            <div className="space-y-2">
+            <div className="flex flex-col gap-2">
               <h1 className="text-4xl font-bold tracking-tighter">
                 {SITE_TITLE}
               </h1>

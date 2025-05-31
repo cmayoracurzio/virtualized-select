@@ -16,7 +16,7 @@ const SelectButton = ({ disabled, onClick, children }: SelectButtonProps) => {
       size="sm"
       disabled={disabled}
       onClick={onClick}
-      className="w-full select-none overflow-hidden rounded-sm text-sm font-normal"
+      className="flex-1 overflow-hidden rounded-xs text-sm font-normal select-none"
     >
       {children}
     </Button>

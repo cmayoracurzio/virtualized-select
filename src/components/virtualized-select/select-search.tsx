@@ -20,7 +20,7 @@ export const SelectSearch = React.memo(
         <Input
           onChange={(event) => onSearch(event.target.value)}
           placeholder={placeholder}
-          className="h-10 border-0 px-0 shadow-none outline-none focus-visible:ring-0 disabled:pointer-events-none"
+          className="h-10 border-0 px-0 shadow-none outline-hidden focus-visible:ring-0 disabled:pointer-events-none"
           disabled={disabled}
           role="searchbox"
           aria-label="Search options"
