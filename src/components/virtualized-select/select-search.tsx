@@ -1,7 +1,11 @@
 import * as React from "react"
 import { SearchIcon } from "lucide-react"
 
-import { Input } from "@/components/ui/input"
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+} from "@/components/ui/input-group"
 
 type SelectSearchProps = {
   onSearch: (search: string) => void
@@ -12,21 +16,22 @@ type SelectSearchProps = {
 export const SelectSearch = React.memo(
   ({ onSearch, placeholder, disabled }: SelectSearchProps) => {
     return (
-      <div role="search" className="flex items-center px-3">
-        <SearchIcon
-          aria-hidden="true"
-          className="mr-2 size-4 shrink-0 opacity-50"
-        />
-        <Input
-          onChange={(event) => onSearch(event.target.value)}
-          placeholder={placeholder}
-          className="h-10 border-none px-0 shadow-none outline-hidden focus-visible:ring-0 disabled:pointer-events-none dark:bg-transparent"
-          disabled={disabled}
+      <InputGroup
+        role="search"
+        className="border-border! rounded-none border-t-0 border-r-0 border-l-0 shadow-none ring-0! dark:bg-transparent"
+      >
+        <InputGroupAddon align="inline-start">
+          <SearchIcon aria-hidden="true" className="shrink-0" />
+        </InputGroupAddon>
+        <InputGroupInput
           role="searchbox"
           aria-label="Search options"
           aria-controls="select-options"
+          onChange={(event) => onSearch(event.target.value)}
+          placeholder={placeholder}
+          disabled={disabled}
         />
-      </div>
+      </InputGroup>
     )
   }
 )

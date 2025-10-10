@@ -3,26 +3,6 @@ import { CheckIcon, XIcon } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 
-type SelectButtonProps = Pick<
-  React.ButtonHTMLAttributes<HTMLButtonElement>,
-  "disabled" | "onClick" | "children"
->
-
-const SelectButton = ({ disabled, onClick, children }: SelectButtonProps) => {
-  return (
-    <Button
-      type="button"
-      variant="ghost"
-      size="sm"
-      disabled={disabled}
-      onClick={onClick}
-      className="flex-1 overflow-hidden text-sm font-normal select-none"
-    >
-      {children}
-    </Button>
-  )
-}
-
 type SelectButtonsProps = {
   ref: React.RefObject<HTMLDivElement | null>
   isMulti: boolean
@@ -43,37 +23,49 @@ export const SelectButtons = React.memo(
   }: SelectButtonsProps) => {
     if (isMulti) {
       return (
-        <div ref={ref} className="flex items-center justify-between p-1">
-          <SelectButton
-            disabled={isSelectAllDisabled}
+        <div ref={ref} className="flex items-center p-1">
+          <Button
+            size="sm"
+            type="button"
+            variant="ghost"
             onClick={onSelectAll}
+            disabled={isSelectAllDisabled}
             aria-label="Select all options"
+            className="flex-1 overflow-hidden font-normal select-none"
           >
             <CheckIcon aria-hidden="true" />
             <span className="truncate">Select all</span>
-          </SelectButton>
-          <SelectButton
-            disabled={isClearDisabled}
+          </Button>
+          <Button
+            size="sm"
+            type="button"
+            variant="ghost"
             onClick={onClear}
+            disabled={isClearDisabled}
             aria-label="Clear selection"
+            className="flex-1 overflow-hidden font-normal select-none"
           >
             <XIcon aria-hidden="true" />
             <span className="truncate">Clear all</span>
-          </SelectButton>
+          </Button>
         </div>
       )
     }
 
     return (
       <div ref={ref} className="p-1">
-        <SelectButton
-          disabled={isClearDisabled}
+        <Button
+          size="sm"
+          type="button"
+          variant="ghost"
           onClick={onClear}
+          disabled={isClearDisabled}
           aria-label="Clear selection"
+          className="w-full overflow-hidden font-normal select-none"
         >
           <XIcon aria-hidden="true" />
           <span className="mr-auto truncate">Clear selection</span>
-        </SelectButton>
+        </Button>
       </div>
     )
   }
