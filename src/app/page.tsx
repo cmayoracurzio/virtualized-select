@@ -138,7 +138,6 @@ export default function Page() {
   }, [hasIsOptionDisabled])
 
   const [size, setSize] = useState<SelectSize>("default")
-  const [minHeight, setMinHeight] = useState<number>(50)
   const [maxHeight, setMaxHeight] = useState<number>(200)
   const [noOptionsMessage, setNoOptionsMessage] = useState<string | undefined>(
     undefined
@@ -184,7 +183,6 @@ export default function Page() {
               getOptionGroup={getOptionGroup}
               isOptionDisabled={isOptionDisabled}
               size={size}
-              minHeight={minHeight}
               maxHeight={maxHeight}
               noOptionsMessage={noOptionsMessage}
               loadingMessage={loadingMessage}
@@ -215,7 +213,6 @@ export default function Page() {
               getOptionGroup={getOptionGroup}
               isOptionDisabled={isOptionDisabled}
               size={size}
-              minHeight={minHeight}
               maxHeight={maxHeight}
               noOptionsMessage={noOptionsMessage}
               loadingMessage={loadingMessage}
@@ -315,14 +312,6 @@ export default function Page() {
             description="Size of the component (when closed)"
             value={size}
             onChange={setSize}
-          />
-          <SliderField
-            label="minHeight"
-            description="Minimum height in pixels of the options list"
-            value={minHeight}
-            minValue={0}
-            maxValue={1000}
-            onChange={setMinHeight}
           />
           <SliderField
             label="maxHeight"
