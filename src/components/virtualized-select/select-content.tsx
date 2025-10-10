@@ -19,7 +19,6 @@ type SelectContentProps<Option> = Required<
     | "getOptionValue"
     | "getOptionLabel"
     | "isOptionDisabled"
-    | "minHeight"
     | "maxHeight"
     | "noOptionsMessage"
     | "enableSearch"
@@ -49,7 +48,6 @@ type SelectContentProps<Option> = Required<
 export const SelectContent = <Option,>({
   options,
   getOptionValue,
-  minHeight,
   maxHeight,
   noOptionsMessage,
   initialFocusOnFirstOption,
@@ -197,7 +195,7 @@ export const SelectContent = <Option,>({
       focusedOptionIndexRef.current = index
       setFocusedOptionIndex(index)
     },
-    [focusedOptionIndexRef, setFocusedOptionIndex]
+    [setFocusedOptionIndex]
   )
 
   // Keyboard navigation
@@ -381,11 +379,8 @@ export const SelectContent = <Option,>({
       <div
         tabIndex={-1}
         ref={scrollElementRef}
-        className="overflow-x-hidden overflow-y-auto outline-hidden"
-        style={{
-          minHeight,
-          maxHeight,
-        }}
+        className="shrink overflow-x-hidden overflow-y-auto outline-hidden"
+        style={{ maxHeight }}
       >
         {effectiveOptions.length === 0 ? (
           <div className="truncate px-2 py-6 text-center text-sm">
